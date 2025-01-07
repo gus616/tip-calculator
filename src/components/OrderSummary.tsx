@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { OrderItem } from "../types"
 import { formatCurrency } from "../helpers/indext"
 
@@ -10,6 +10,7 @@ type OrderSummaryProps = {
 
 const OrderSummary = ({ orderItems, tip }: OrderSummaryProps) => {
 
+    //useMemo approach
     const subtotalAmount = useMemo(() => {
         return orderItems.reduce((total, item) => total + (item.quantity * item.price), 0)
     }, [orderItems]);
@@ -17,8 +18,18 @@ const OrderSummary = ({ orderItems, tip }: OrderSummaryProps) => {
 
     const tipAmount = useMemo(() => subtotalAmount * tip , [tip, subtotalAmount]);
 
-    const totalAmount = subtotalAmount + (subtotalAmount * tip);
+    const totalAmount = useMemo(() => subtotalAmount + (subtotalAmount * tip), [subtotalAmount, tip]);
 
+
+    //useCallBack
+
+    const subtotal = useCallback(() => orderItems.reduce((total, item) => total + (item.quantity * item.price), 0), [orderItems]);
+
+    const tipCalculated = useCallback(() => subtotal() * tip, [tip, subtotal])
+
+    const totalCalculated = useCallback(() => subtotal() + tipCalculated(), [subtotal, tipCalculated]);
+
+    console.log('total calculated: ', totalCalculated());
 
     return (
         <>
