@@ -49,7 +49,9 @@ const OrderSummary = ({ orderItems, tip }: OrderSummaryProps) => {
                     Total: <span className="font-bold">{formatCurrency(totalAmount)}</span>
                 </p>
             </div>
-            <button></button>
+            <button className="w-full bg-black p-3 uppercase text-white font-bold mt-10 disabled:opacity-10" disabled={orderItems.length === 0}>
+                Save Order
+            </button>
         </>
     )
 }

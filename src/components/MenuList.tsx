@@ -1,4 +1,4 @@
-import {MenuItem as MenuItemType, OrderItem } from '../types'
+import { MenuItem as MenuItemType, OrderItem } from '../types'
 import MenuItem from './MenuItem';
 import OrderContents from './OrderContents';
 import OrderSummary from './OrderSummary';
@@ -14,7 +14,7 @@ type menuProps = {
     onSetTip: (tip: number) => void
 }
 
-const MenuList = ({ menuItems, addItem, order, onDelete, tip, onSetTip}: menuProps) => {
+const MenuList = ({ menuItems, addItem, order, onDelete, tip, onSetTip }: menuProps) => {
     return (
         <main className="max-w-7xl mx-auto py-20 grid md:grid-cols-2">
             <div className="p-5">
@@ -28,11 +28,18 @@ const MenuList = ({ menuItems, addItem, order, onDelete, tip, onSetTip}: menuPro
                 </div>
 
             </div>
-
             <div className="border border-dashed border-slate-400 p-5 rounded-lg space-y-10">
-               <OrderContents orderItems={order} onDelete={onDelete} />
-               <TipPercentageForm setTip={onSetTip}/>
-               <OrderSummary orderItems={order} tip={tip}/>
+                <OrderContents orderItems={order} onDelete={onDelete} />
+                {
+                    order.length !== 0 ?
+                        (
+                            <>
+                                <TipPercentageForm setTip={onSetTip} />
+                              
+                            </>
+
+                        ) : undefined
+                }  <OrderSummary orderItems={order} tip={tip} />
             </div>
         </main>
     )
